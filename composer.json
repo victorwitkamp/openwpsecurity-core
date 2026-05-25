@@ -1,11 +1,22 @@
 {
 	"name": "openwpsecurity/core",
-	"description": "Shared core utilities for OpenWPSecurity WordPress plugins.",
+	"description": "PSR HTTP and WordPress adapter utilities for OpenWPSecurity plugins.",
 	"type": "library",
 	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"openwpsecurity",
+		"psr-7",
+		"wordpress",
+		"wordpress-plugin"
+	],
 	"autoload": {
 		"psr-4": {
 			"VictorWitkamp\\OpenWPSecurity\\Core\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"VictorWitkamp\\OpenWPSecurity\\Core\\Tests\\": "tests/"
 		}
 	},
 	"require": {
@@ -13,7 +24,30 @@
 		"laminas/laminas-httphandlerrunner": "^2.13",
 		"php": ">=8.2"
 	},
+	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+		"phpunit/phpunit": "^10.5 || ^11.0",
+		"squizlabs/php_codesniffer": "^3.13",
+		"wp-coding-standards/wpcs": "^3.0"
+	},
+	"scripts": {
+		"install-codestandards": [
+			"PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+		],
+		"phpcs": [
+			"phpcs --standard=phpcs.xml.dist"
+		],
+		"phpcbf": [
+			"phpcbf --standard=phpcs.xml.dist"
+		],
+		"test": [
+			"phpunit --configuration phpunit.xml.dist"
+		]
+	},
 	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
 		"sort-packages": true
 	}
 }

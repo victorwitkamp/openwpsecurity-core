@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class WordPressServerRequestFactory {
 	public function create(): ServerRequestInterface {
-		// Raw HTTP input must be captured before WordPress-specific nonce handling.
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing -- Raw HTTP input must be captured before WordPress-specific nonce handling.
 		return LaminasServerRequestFactory::fromGlobals(
 			$_SERVER,
 			$_GET,
@@ -17,5 +17,6 @@ final class WordPressServerRequestFactory {
 			$_COOKIE,
 			$_FILES
 		);
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 	}
 }
