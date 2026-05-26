@@ -14,6 +14,12 @@
 		"issues": "https://github.com/victorwitkamp/openwpsecurity-core/issues",
 		"source": "https://github.com/victorwitkamp/openwpsecurity-core"
 	},
+	"funding": [
+		{
+			"type": "github",
+			"url": "https://github.com/sponsors/victorwitkamp"
+		}
+	],
 	"autoload": {
 		"psr-4": {
 			"VictorWitkamp\\OpenWPSecurity\\Core\\": "src/"

@@ -62,3 +62,9 @@ Renders the shared country distribution panel used by OpenWPSecurity report page
 - `psr/http-factory`
 
 The WordPress adapter classes expect WordPress runtime functions such as `get_option()` and `wp_json_encode()` to be available.
+
+## Support
+
+OpenWPSecurity Core is maintained as open-source software. Funding helps cover maintenance, testing, documentation, and continued development.
+
+- GitHub Sponsors: https://github.com/sponsors/victorwitkamp
