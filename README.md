@@ -1,8 +1,8 @@
 # OpenWPSecurity Core
 
 [![CI](https://github.com/victorwitkamp/openwpsecurity-core/actions/workflows/ci.yml/badge.svg)](https://github.com/victorwitkamp/openwpsecurity-core/actions/workflows/ci.yml)
-[![Packagist Version](https://img.shields.io/packagist/v/openwpsecurity/core.svg)](https://packagist.org/packages/openwpsecurity/core)
-[![License](https://img.shields.io/packagist/l/openwpsecurity/core.svg)](https://packagist.org/packages/openwpsecurity/core)
+[![Packagist](https://img.shields.io/badge/packagist-openwpsecurity%2Fcore-blue)](https://packagist.org/packages/openwpsecurity/core)
+[![License](https://img.shields.io/badge/license-GPL--2.0--or--later-blue)](LICENSE)
 
 Composer package: [`openwpsecurity/core`](https://packagist.org/packages/openwpsecurity/core)
 
@@ -33,6 +33,26 @@ Creates a PSR-7 `ServerRequestInterface` from the active WordPress request using
 `VictorWitkamp\OpenWPSecurity\Core\Http\Response\ResponseDispatcher`
 
 Emits HTML, JSON, text, and redirect responses using PSR-7 response factories and `laminas/laminas-httphandlerrunner`.
+
+`VictorWitkamp\OpenWPSecurity\Core\Configuration\SettingsInputSanitizer`
+
+Normalizes line-based settings, trusted IP header lists, and IP address lists.
+
+`VictorWitkamp\OpenWPSecurity\Core\Location\GeoIpLookup`
+
+Classifies local/private IP addresses and resolves country metadata through the PHP GeoIP extension or optional remote lookup.
+
+`VictorWitkamp\OpenWPSecurity\Core\Admin\Reporting\ReportPeriod`
+
+Maps supported report periods to labels and durations.
+
+`VictorWitkamp\OpenWPSecurity\Core\Admin\Pagination\AdminPaginator`
+
+Builds WordPress admin pagination links for report tables.
+
+`VictorWitkamp\OpenWPSecurity\Core\Admin\Presentation\CountryDistributionPanel`
+
+Renders the shared country distribution panel used by OpenWPSecurity report pages.
 
 ## Runtime Dependencies
 
