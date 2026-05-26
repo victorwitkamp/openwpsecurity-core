@@ -36,6 +36,10 @@ final class IpAddressInspector {
 			return true;
 		}
 
+		if ( $this->is_ipv6_documentation_address( $ip_address ) ) {
+			return true;
+		}
+
 		return ! (bool) filter_var(
 			$ip_address,
 			FILTER_VALIDATE_IP,
@@ -63,5 +67,21 @@ final class IpAddressInspector {
 		}
 
 		return '';
+	}
+
+	private function is_ipv6_documentation_address( string $ip_address ): bool {
+		$packed = inet_pton( $ip_address );
+
+		if ( false === $packed || 16 !== strlen( $packed ) ) {
+			return false;
+		}
+
+		$documentation_prefix = inet_pton( '2001:db8::' );
+
+		if ( false === $documentation_prefix ) {
+			return false;
+		}
+
+		return substr( $packed, 0, 4 ) === substr( $documentation_prefix, 0, 4 );
 	}
 }
