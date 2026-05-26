@@ -2,6 +2,7 @@
 /composer.lock
 /coverage/
 *.md
+!README.md
 /.phpunit.cache/
 /.phpunit.result.cache
 /.phpcs-cache

@@ -3,12 +3,17 @@
 	"description": "PSR HTTP and WordPress adapter utilities for OpenWPSecurity plugins.",
 	"type": "library",
 	"license": "GPL-2.0-or-later",
+	"homepage": "https://github.com/victorwitkamp/openwpsecurity-core",
 	"keywords": [
 		"openwpsecurity",
 		"psr-7",
 		"wordpress",
 		"wordpress-plugin"
 	],
+	"support": {
+		"issues": "https://github.com/victorwitkamp/openwpsecurity-core/issues",
+		"source": "https://github.com/victorwitkamp/openwpsecurity-core"
+	},
 	"autoload": {
 		"psr-4": {
 			"VictorWitkamp\\OpenWPSecurity\\Core\\": "src/"
