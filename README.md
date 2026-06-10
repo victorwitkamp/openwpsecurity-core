@@ -17,7 +17,7 @@ OpenWPSecurity Core contains shared PHP infrastructure used by OpenWPSecurity Wo
 ## Install
 
 ```bash
-composer require openwpsecurity/core:^0.1
+composer require openwpsecurity/core:^0.3
 ```
 
 ## API Surface
@@ -53,6 +53,22 @@ Builds WordPress admin pagination links for report tables.
 `VictorWitkamp\OpenWPSecurity\Core\Admin\Presentation\CountryDistributionPanel`
 
 Renders the shared country distribution panel used by OpenWPSecurity report pages.
+
+`VictorWitkamp\OpenWPSecurity\Core\Security\Ban\TemporaryBanRepository`
+
+Defines the shared active temporary-ban repository contract.
+
+`VictorWitkamp\OpenWPSecurity\Core\Security\Ban\AbstractTemporaryBanRepository`
+
+Provides indexed table storage, upserts, expiry cleanup, and WordPress object caching for plugin-owned temporary-ban repositories.
+
+`VictorWitkamp\OpenWPSecurity\Core\Security\Ban\AbstractTemporaryBanCounterStore`
+
+Provides atomic per-IP temporary-ban recurrence counters for plugin-owned tables.
+
+`VictorWitkamp\OpenWPSecurity\Core\Security\Ban\TemporaryBanCleanup`
+
+Schedules daily removal of expired temporary-ban rows.
 
 ## Runtime Dependencies
 

@@ -60,17 +60,12 @@ final class PermanentBansPanel {
 		);
 	}
 
-	public function sorted_rows(): array {
-		$rows = array_values( $this->ban_store->get_all_bans() );
+	public function count_bans(): int {
+		return $this->ban_store->count_bans();
+	}
 
-		usort(
-			$rows,
-			static function ( array $left, array $right ): int {
-				return strcmp( (string) ( $right['banned_at'] ?? '' ), (string) ( $left['banned_at'] ?? '' ) );
-			}
-		);
-
-		return $rows;
+	public function get_bans( int $limit, int $offset ): array {
+		return $this->ban_store->get_bans( $limit, $offset );
 	}
 
 	public function render_notice( array $notice ): void {
@@ -95,13 +90,13 @@ final class PermanentBansPanel {
 					<p class="description"><?php echo esc_html( $description ); ?></p>
 				</div>
 				<div class="vwfw-record-total">
-					<span class="vwfw-record-total-label">Total matching rows</span>
+					<span class="vwfw-record-total-label">Current permanent bans</span>
 					<strong><?php echo esc_html( number_format_i18n( $total_items ) ); ?></strong>
 				</div>
 			</div>
 
 			<?php if ( $total_items > 0 ) : ?>
-				<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=' . $page_slug ) ); ?>">
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=' . $page_slug ) ); ?>" data-confirm="Clear all permanent bans? This cannot be undone.">
 					<?php wp_nonce_field( $nonce_action ); ?>
 					<input type="hidden" name="openwpsecurity_ban_action" value="clear_bans">
 					<p>

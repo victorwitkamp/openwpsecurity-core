@@ -1,6 +1,6 @@
 {
 	"name": "openwpsecurity/core",
-	"description": "PSR HTTP and WordPress adapter utilities for OpenWPSecurity plugins.",
+	"description": "Shared HTTP, database, admin, and security infrastructure for OpenWPSecurity plugins.",
 	"type": "library",
 	"license": "GPL-2.0-or-later",
 	"homepage": "https://github.com/victorwitkamp/openwpsecurity-core",
