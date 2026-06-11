@@ -1,5 +1,7 @@
 # OpenWPSecurity Core
 
+<img src="assets/banner-772x250.png" alt="OpenWPSecurity" width="772">
+
 [![CI](https://github.com/victorwitkamp/openwpsecurity-core/actions/workflows/ci.yml/badge.svg)](https://github.com/victorwitkamp/openwpsecurity-core/actions/workflows/ci.yml)
 [![Packagist](https://img.shields.io/badge/packagist-openwpsecurity%2Fcore-blue)](https://packagist.org/packages/openwpsecurity/core)
 [![License](https://img.shields.io/badge/license-GPL--2.0--or--later-blue)](LICENSE)

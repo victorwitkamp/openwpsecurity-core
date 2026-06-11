@@ -1,6 +1,7 @@
 /vendor/
 /composer.lock
 /coverage/
+/.playwright-mcp/
 *.md
 !README.md
 /.phpunit.cache/
