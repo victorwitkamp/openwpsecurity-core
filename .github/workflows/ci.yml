@@ -36,11 +36,17 @@ jobs:
       - name: Validate Composer metadata
         run: composer validate --strict
 
+      - name: Audit Composer dependencies
+        run: composer audit
+
       - name: Run PHPUnit
         run: composer test
 
-      - name: Run PHPCS
-        run: composer phpcs
+      - name: Run WordPress Coding Standards
+        run: composer lint
+
+      - name: Run PHPStan
+        run: composer analyse
 
       - name: Run PHP lint
         run: find src tests -name '*.php' -print0 | xargs -0 -n 1 php -l

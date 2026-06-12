@@ -20,7 +20,7 @@ final class ResponseDispatcher {
 		$this->emitter          = new SapiEmitter();
 	}
 
-	public function html( int $status_code, string $html, array $headers = array() ): void {
+	public function html( int $status_code, string $html, array $headers = array() ): never {
 		$response = $this->create_response(
 			$status_code,
 			$html,
@@ -35,7 +35,7 @@ final class ResponseDispatcher {
 		$this->emit( $response );
 	}
 
-	public function json( int $status_code, array $payload, array $headers = array() ): void {
+	public function json( int $status_code, array $payload, array $headers = array() ): never {
 		$json = wp_json_encode( $payload );
 		$json = is_string( $json ) ? $json : '{}';
 
@@ -53,7 +53,7 @@ final class ResponseDispatcher {
 		$this->emit( $response );
 	}
 
-	public function text( int $status_code, string $message, array $headers = array() ): void {
+	public function text( int $status_code, string $message, array $headers = array() ): never {
 		$response = $this->create_response(
 			$status_code,
 			$message,
@@ -68,7 +68,7 @@ final class ResponseDispatcher {
 		$this->emit( $response );
 	}
 
-	public function redirect( string $location, int $status_code = 302 ): void {
+	public function redirect( string $location, int $status_code = 302 ): never {
 		$response = $this->response_factory->createResponse( $status_code )->withHeader( 'Location', $location );
 		$this->emit( $this->with_default_headers( $response ) );
 	}
@@ -92,7 +92,7 @@ final class ResponseDispatcher {
 			->withHeader( 'Expires', 'Wed, 11 Jan 1984 05:00:00 GMT' );
 	}
 
-	private function emit( ResponseInterface $response ): void {
+	private function emit( ResponseInterface $response ): never {
 		$this->emitter->emit( $response );
 		exit;
 	}

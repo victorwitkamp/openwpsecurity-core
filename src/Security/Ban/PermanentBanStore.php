@@ -100,20 +100,21 @@ final class PermanentBanStore {
 		return array() !== $this->get_ban_for_ip( $ip );
 	}
 
-	public function create_ban( string $ip, string $reason, string $source = '', array $context = array() ): void {
+	public function create_ban( string $ip, string $reason, string $source = '', array $context = array() ): bool {
 		if ( '' === $source ) {
 			$source = $this->default_source;
 		}
 
 		if ( '' === $ip || $this->ip_address_inspector->is_private( $ip ) ) {
-			return;
+			return false;
 		}
 
 		if ( $this->is_banned( $ip ) ) {
-			return;
+			return false;
 		}
 
-		$ban      = new PermanentBan(
+		$evidence_json = $context ? wp_json_encode( $context ) : '';
+		$ban           = new PermanentBan(
 			$ip,
 			(string) ( $context['country_code'] ?? '' ),
 			(string) ( $context['country_name'] ?? '' ),
@@ -121,15 +122,17 @@ final class PermanentBanStore {
 			$reason,
 			(string) ( $context['request_uri'] ?? '' ),
 			(string) ( $context['user_agent'] ?? '' ),
-			$context ? wp_json_encode( $context ) : ''
+			is_string( $evidence_json ) ? $evidence_json : ''
 		);
-		$inserted = $this->table_writer->insert( $ban->to_insert_row() );
+		$inserted      = $this->table_writer->insert( $ban->to_insert_row() );
 
 		if ( ! $inserted ) {
-			return;
+			return false;
 		}
 
 		( $this->ban_event_logger )( $ip, $reason, $source, $context );
+
+		return true;
 	}
 
 	public function remove_ban( string $ip ): bool {

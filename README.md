@@ -19,7 +19,7 @@ OpenWPSecurity Core contains shared PHP infrastructure used by OpenWPSecurity Wo
 ## Install
 
 ```bash
-composer require openwpsecurity/core:^0.3
+composer require openwpsecurity/core:^0.4
 ```
 
 ## API Surface
@@ -80,6 +80,10 @@ Schedules daily removal of expired temporary-ban rows.
 - `psr/http-factory`
 
 The WordPress adapter classes expect WordPress runtime functions such as `get_option()` and `wp_json_encode()` to be available.
+
+## Development
+
+Run `composer install`, then use `composer check` for WordPress Coding Standards, PHPStan static analysis, and PHPUnit. The repository recommends the VS Code PHP Sniffer & Beautifier and PHPStan extensions, which validate PHP files during development.
 
 ## Support
 

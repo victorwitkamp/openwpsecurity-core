@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace VictorWitkamp\OpenWPSecurity\Core\Security\Ban;
 
-final class PermanentBan {
+final readonly class PermanentBan {
 	private string $ip_address;
 	private string $country_code;
 	private string $country_name;
@@ -27,6 +27,9 @@ final class PermanentBan {
 		$this->created_at    = $created_at;
 	}
 
+	/**
+	 * @param array<string, mixed> $row
+	 */
 	public static function from_row( array $row ): self {
 		return new self(
 			(string) ( $row['ip_address'] ?? '' ),
@@ -45,6 +48,9 @@ final class PermanentBan {
 		return $this->ip_address;
 	}
 
+	/**
+	 * @return array<string, string>
+	 */
 	public function to_insert_row(): array {
 		return array(
 			'ip_address'    => $this->ip_address,
@@ -58,6 +64,9 @@ final class PermanentBan {
 		);
 	}
 
+	/**
+	 * @return array<string, string>
+	 */
 	public function to_array(): array {
 		return array(
 			'ip_address'    => $this->ip_address,

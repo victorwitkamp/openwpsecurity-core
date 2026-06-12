@@ -2,12 +2,13 @@
 /composer.lock
 /coverage/
 /.playwright-mcp/
+/.claude/
 *.md
 !README.md
 /.phpunit.cache/
 /.phpunit.result.cache
 /.phpcs-cache
+/.phpstan.cache/
 .DS_Store
 Thumbs.db
 .idea/
-.vscode/

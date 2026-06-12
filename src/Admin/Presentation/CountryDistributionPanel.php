@@ -38,7 +38,7 @@ final class CountryDistributionPanel {
 						<?php foreach ( $countries as $index => $country ) : ?>
 							<?php
 							$count      = (int) $country['total'];
-							$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
+							$percentage = ( $count / $total ) * 100;
 							$start      = $offset;
 							$offset    += $percentage;
 							$color      = self::COLORS[ $index % count( self::COLORS ) ];
@@ -60,7 +60,7 @@ final class CountryDistributionPanel {
 						<?php foreach ( $countries as $index => $country ) : ?>
 							<?php
 							$count      = (int) $country['total'];
-							$percentage = $total > 0 ? round( ( $count / $total ) * 100, 1 ) : 0;
+							$percentage = round( ( $count / $total ) * 100, 1 );
 							$color      = self::COLORS[ $index % count( self::COLORS ) ];
 							$label      = trim( (string) $country['country_code'] . ' ' . (string) $country['country_name'] );
 							?>

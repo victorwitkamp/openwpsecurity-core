@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace VictorWitkamp\OpenWPSecurity\Core\Security\Ban;
 
-final class TemporaryBan {
+final readonly class TemporaryBan {
 	private string $ip_address;
 	private int $created_at;
 	private int $expires_at;
@@ -25,6 +25,9 @@ final class TemporaryBan {
 		$this->evidence_json = $evidence_json;
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 */
 	public static function from_array( array $data ): self {
 		return new self(
 			(string) ( $data['ip_address'] ?? '' ),
@@ -38,6 +41,9 @@ final class TemporaryBan {
 		);
 	}
 
+	/**
+	 * @param array<string, mixed> $row
+	 */
 	public static function from_row( array $row ): self {
 		return self::from_array( $row );
 	}
@@ -70,6 +76,9 @@ final class TemporaryBan {
 		return $this->details;
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function evidence(): array {
 		$evidence = json_decode( $this->evidence_json, true );
 
@@ -80,6 +89,9 @@ final class TemporaryBan {
 		return $this->evidence_json;
 	}
 
+	/**
+	 * @return array<string, int|string>
+	 */
 	public function to_row(): array {
 		return array(
 			'ip_address'    => $this->ip_address,
@@ -93,6 +105,9 @@ final class TemporaryBan {
 		);
 	}
 
+	/**
+	 * @return array<string, int|string>
+	 */
 	public function to_array(): array {
 		return array(
 			'ip_address'    => $this->ip_address,

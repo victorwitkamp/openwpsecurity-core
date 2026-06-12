@@ -7,6 +7,9 @@ namespace VictorWitkamp\OpenWPSecurity\Core\Security\Ban;
 interface TemporaryBanRepository {
 	public function find_active_temporary_ban( string $ip_address ): ?TemporaryBan;
 
+	/**
+	 * @return list<TemporaryBan>
+	 */
 	public function get_active_temporary_bans(): array;
 
 	public function count_active_temporary_bans(): int;

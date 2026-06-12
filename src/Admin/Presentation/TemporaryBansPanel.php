@@ -32,7 +32,7 @@ final class TemporaryBansPanel {
 		check_admin_referer( $nonce_action );
 
 		$post   = wp_unslash( $_POST );
-		$action = isset( $post['openwpsecurity_temporary_ban_action'] ) ? sanitize_key( (string) $post['openwpsecurity_temporary_ban_action'] ) : '';
+		$action = sanitize_key( (string) $post['openwpsecurity_temporary_ban_action'] );
 
 		if ( 'remove_ban' === $action ) {
 			$ip_address = isset( $post['ip_address'] ) ? sanitize_text_field( (string) $post['ip_address'] ) : '';

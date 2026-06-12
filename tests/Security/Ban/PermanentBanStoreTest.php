@@ -13,7 +13,7 @@ namespace {
 }
 
 namespace VictorWitkamp\OpenWPSecurity\Core\Security\Ban {
-	function wp_json_encode( $value ) {
+	function wp_json_encode( mixed $value ): string|false {
 		return json_encode( $value );
 	}
 }
@@ -28,6 +28,9 @@ namespace VictorWitkamp\OpenWPSecurity\Core\Tests\Security\Ban {
 
 	final class PermanentBanStoreTest extends TestCase {
 		private PermanentBanStore $store;
+		/**
+		 * @var list<array<string, mixed>>
+		 */
 		private array $logged_events;
 		private TestWpdb $wpdb;
 
@@ -56,6 +59,12 @@ namespace VictorWitkamp\OpenWPSecurity\Core\Tests\Security\Ban {
 			self::assertTrue( $this->store->remove_ban( '8.8.8.8' ) );
 			self::assertFalse( $this->store->is_banned( '8.8.8.8' ) );
 			self::assertSame( array(), $this->store->get_bans( 25 ) );
+		}
+
+		public function test_create_ban_reports_whether_a_ban_was_created(): void {
+			self::assertTrue( $this->store->create_ban( '8.8.8.8', 'manual test' ) );
+			self::assertFalse( $this->store->create_ban( '8.8.8.8', 'duplicate' ) );
+			self::assertFalse( $this->store->create_ban( '127.0.0.1', 'private address' ) );
 		}
 
 		public function test_remove_ban_returns_false_when_ip_is_not_banned(): void {
@@ -88,8 +97,15 @@ namespace VictorWitkamp\OpenWPSecurity\Core\Tests\Security\Ban {
 
 	final class TestWpdb {
 		public string $prefix = 'wp_';
+		/**
+		 * @var array<string, list<array<string, mixed>>>
+		 */
 		private array $rows = array();
 
+		/**
+		 * @param array<string, mixed> $data
+		 * @param list<string>         $formats
+		 */
 		public function insert( string $table, array $data, array $formats ): bool {
 			$data['id']      = count( $this->rows[ $table ] ?? array() ) + 1;
 			$this->rows[ $table ][] = $data;
@@ -97,7 +113,11 @@ namespace VictorWitkamp\OpenWPSecurity\Core\Tests\Security\Ban {
 			return true;
 		}
 
-		public function delete( string $table, array $where, array $formats ) {
+		/**
+		 * @param array<string, mixed> $where
+		 * @param list<string>         $formats
+		 */
+		public function delete( string $table, array $where, array $formats ): int {
 			$before              = count( $this->rows[ $table ] ?? array() );
 			$this->rows[ $table ] = array_values(
 				array_filter(
@@ -111,7 +131,11 @@ namespace VictorWitkamp\OpenWPSecurity\Core\Tests\Security\Ban {
 			return $before - count( $this->rows[ $table ] );
 		}
 
-		public function get_results( $query, string $output = ARRAY_A ): array {
+		/**
+		 * @param array<string, mixed>|string $query
+		 * @return list<array<string, mixed>>
+		 */
+		public function get_results( array|string $query, string $output = ARRAY_A ): array {
 			$table = $this->table_from_query( $query );
 			$rows  = $this->rows[ $table ] ?? array();
 
@@ -131,7 +155,11 @@ namespace VictorWitkamp\OpenWPSecurity\Core\Tests\Security\Ban {
 			return $rows;
 		}
 
-		public function get_row( $query, string $output = ARRAY_A ): ?array {
+		/**
+		 * @param array<string, mixed>|string $query
+		 * @return array<string, mixed>|null
+		 */
+		public function get_row( array|string $query, string $output = ARRAY_A ): ?array {
 			$table = $this->table_from_query( $query );
 			$ip    = is_array( $query ) ? (string) ( $query['params'][0] ?? '' ) : '';
 
@@ -144,13 +172,19 @@ namespace VictorWitkamp\OpenWPSecurity\Core\Tests\Security\Ban {
 			return null;
 		}
 
-		public function get_var( $query ): int {
+		/**
+		 * @param array<string, mixed>|string $query
+		 */
+		public function get_var( array|string $query ): int {
 			$table = $this->table_from_query( $query );
 
 			return count( $this->rows[ $table ] ?? array() );
 		}
 
-		public function query( $query ): bool {
+		/**
+		 * @param array<string, mixed>|string $query
+		 */
+		public function query( array|string $query ): bool {
 			$table = $this->table_from_query( $query );
 
 			$this->rows[ $table ] = array();
@@ -158,7 +192,10 @@ namespace VictorWitkamp\OpenWPSecurity\Core\Tests\Security\Ban {
 			return true;
 		}
 
-		public function prepare( string $query, ...$params ): array {
+		/**
+		 * @return array{query: string, params: array<int, mixed>}
+		 */
+		public function prepare( string $query, mixed ...$params ): array {
 			return array(
 				'query'  => $query,
 				'params' => is_array( $params[0] ?? null ) ? $params[0] : $params,
@@ -169,7 +206,10 @@ namespace VictorWitkamp\OpenWPSecurity\Core\Tests\Security\Ban {
 			return '';
 		}
 
-		private function table_from_query( $query ): string {
+		/**
+		 * @param array<string, mixed>|string $query
+		 */
+		private function table_from_query( array|string $query ): string {
 			$sql = is_array( $query ) ? (string) $query['query'] : (string) $query;
 
 			if ( preg_match( '/FROM\s+([a-zA-Z0-9_]+)/', $sql, $matches ) ) {

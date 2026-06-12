@@ -45,19 +45,23 @@ class TemplateRenderer {
 	}
 
 	private function enqueue_runtime_assets(): void {
-		wp_enqueue_style(
-			$this->style_handle,
-			$this->style_url,
-			array(),
-			$this->version
-		);
+		if ( '' !== $this->style_handle && '' !== $this->style_url ) {
+			wp_enqueue_style(
+				$this->style_handle,
+				$this->style_url,
+				array(),
+				$this->version
+			);
+		}
 
-		wp_enqueue_script(
-			$this->script_handle,
-			$this->script_url,
-			array(),
-			$this->version,
-			true
-		);
+		if ( '' !== $this->script_handle && '' !== $this->script_url ) {
+			wp_enqueue_script(
+				$this->script_handle,
+				$this->script_url,
+				array(),
+				$this->version,
+				true
+			);
+		}
 	}
 }

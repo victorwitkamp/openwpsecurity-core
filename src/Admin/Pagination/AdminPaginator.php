@@ -57,7 +57,7 @@ final class AdminPaginator {
 			)
 		);
 
-		if ( ! is_string( $links ) || '' === $links ) {
+		if ( '' === $links ) {
 			return '';
 		}
 

@@ -18,7 +18,7 @@ class RequestDenialResponder {
 		$this->response_dispatcher = $response_dispatcher;
 	}
 
-	public function deny_temporarily( string $ip, string $request_type, int $expires, int $status_code, string $title, string $message ): void {
+	public function deny_temporarily( string $ip, string $request_type, int $expires, int $status_code, string $title, string $message ): never {
 		$minutes_left = max( 1, (int) ceil( ( $expires - time() ) / MINUTE_IN_SECONDS ) );
 
 		$this->send_response(
@@ -41,7 +41,7 @@ class RequestDenialResponder {
 		);
 	}
 
-	public function deny_rate_limited( string $ip, string $request_type, int $retry_after_seconds, string $title, string $message, array $template_variables = array(), array $json_payload = array() ): void {
+	public function deny_rate_limited( string $ip, string $request_type, int $retry_after_seconds, string $title, string $message, array $template_variables = array(), array $json_payload = array() ): never {
 		$retry_after_seconds = max( 1, $retry_after_seconds );
 
 		$this->send_response(
@@ -72,7 +72,7 @@ class RequestDenialResponder {
 		);
 	}
 
-	public function deny_permanently( string $ip, string $request_type, string $title, string $message, string $message_secondary = '' ): void {
+	public function deny_permanently( string $ip, string $request_type, string $title, string $message, string $message_secondary = '' ): never {
 		$this->send_response(
 			$request_type,
 			403,
@@ -91,7 +91,7 @@ class RequestDenialResponder {
 		);
 	}
 
-	private function send_response( string $request_type, int $status_code, string $message, array $json_payload, string $template_name, array $template_variables ): void {
+	private function send_response( string $request_type, int $status_code, string $message, array $json_payload, string $template_name, array $template_variables ): never {
 		$headers = array();
 
 		if ( 429 === $status_code ) {

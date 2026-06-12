@@ -13,6 +13,9 @@ final class GeoIpLookup {
 		$this->ip_address_inspector = $ip_address_inspector;
 	}
 
+	/**
+	 * @return array{country_code: string, country_name: string}
+	 */
 	public function lookup( string $ip, bool $enabled = true ): array {
 		if ( '' === $ip ) {
 			return array(
@@ -44,12 +47,10 @@ final class GeoIpLookup {
 			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- This extension may emit warnings for unsupported lookups.
 			$record = @geoip_record_by_name( $ip );
 
-			if ( is_array( $record ) ) {
-				$result = array(
-					'country_code' => isset( $record['country_code'] ) ? (string) $record['country_code'] : '',
-					'country_name' => isset( $record['country_name'] ) ? (string) $record['country_name'] : '',
-				);
-			}
+			$result = array(
+				'country_code' => (string) ( $record['country_code'] ?? '' ),
+				'country_name' => (string) ( $record['country_name'] ?? '' ),
+			);
 		}
 
 		if ( $enabled && '' === $result['country_code'] ) {

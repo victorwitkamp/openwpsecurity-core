@@ -72,6 +72,9 @@ abstract class AbstractTemporaryBanRepository implements TableReference, Tempora
 		return $temporary_ban;
 	}
 
+	/**
+	 * @return list<TemporaryBan>
+	 */
 	public function get_active_temporary_bans(): array {
 		global $wpdb;
 

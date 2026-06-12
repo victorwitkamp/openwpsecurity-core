@@ -14,7 +14,7 @@ final class TemporaryBanCleanup {
 	}
 
 	public function register_hooks(): void {
-		add_action( $this->cleanup_hook, array( $this->temporary_ban_repository, 'purge_expired_temporary_bans' ) );
+		add_action( $this->cleanup_hook, array( $this, 'purge_expired_temporary_bans' ) );
 		add_action( 'init', array( $this, 'synchronize_schedule' ), 5 );
 	}
 
@@ -31,5 +31,9 @@ final class TemporaryBanCleanup {
 		if ( false === wp_next_scheduled( $this->cleanup_hook ) ) {
 			wp_schedule_event( time() + HOUR_IN_SECONDS, 'daily', $this->cleanup_hook );
 		}
+	}
+
+	public function purge_expired_temporary_bans(): void {
+		$this->temporary_ban_repository->purge_expired_temporary_bans();
 	}
 }
